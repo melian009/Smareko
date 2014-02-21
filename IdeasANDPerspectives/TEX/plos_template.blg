@@ -1,7 +1,9 @@
-This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: plos_template.aux
 The style file: plos2009.bst
 Database file #1: references.bib
+Reallocated singl_function (elt_size=4) to 100 items from 50.
 Name 1 in "Rybicki, J., and Hanski, I." has a comma at the end for entry rybickihanski2013
 while executing---line 3964 of file plos2009.bst
 You've used 1 entry,
