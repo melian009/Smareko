@@ -1,0 +1,659 @@
+\section{The model and its implementation}
+
+In this section, we describe the computational model, while the
+mathematical definitions and further technical details are represented
+in the online supporting information.
+
+\subsection{Dynamic landscapes}
+
+We use a spatially explicit multitrophic individual-based model in
+patchy and dynamic landcapes with individuals dispersing in a random
+geometric network with $N$ patches each containing $J_{i}$
+individuals. The number of connections of each patch with other
+patches in the network change with time and it is a function of the
+fluctuations of the radius driven by random or seasonal dynamics...
+
+\vspace{0.2 in}
+Here equation to capture landscape dynamics...
+\vspace{0.2 in}
+
+The dynamics are modelled as a discrete...  The state of each patch is
+described by occupancy matrix... We simulate a large assemblage of
+species for different trophic levels. Thus, there can be several
+species at each trophic level and there are several spatially distinct
+sites. The trophic levels are resources ($R$), consumers ($H$), and
+predators ($P$), thus, we have three distinct metacommunities of
+resource, consumers, and predators/parasitoids. To model
+spatio-temporal changes in the abundance of these sites, we need to
+define dispersal and trophic interaction rules together with
+population dynamics....
+
+\subsection{Heterogeneous habitats in dynamic landscapes}
+
+We now move to the idea of discrete and heterogeneous habitats. We do
+not associate a priori a value for each patch which determine the
+habitat type \cite{rybickihanski2013}. Instead, we allow individuals
+to move under two scenarios: 1) Dispersal between any two patches
+occur as a function of species abundance of the leaving site. In this
+scenario individuals only move to connected sites and they only feel
+the dynamics of the landscape. This means individuals are not aware of
+the state of each site before they disperse (i.e., the number of prey
+or predators in each site). We call this the neutral scenario.
+
+In the second scenario dispersal between two patches occur not only to
+the connected patches driven by the dynamics of the landscape, but
+also because individuals have information of each site and they
+disperse with higher probabilitites to the sites that have a low
+number of predators and a high number of resources available. Thus,
+habitat types are a function of the landscape and predator-prey
+dynamics and these two fluctuating mechanisms determine the habitat
+quality for the species in the respective patch.
+
+\subsection{Implementation}
+
+This section gives an overview of the implementation of the
+simulations, while the technical details are given in the supporting
+information. Prior to the simulation, one needs to specify the
+parameters for generating the landscape and the regional pool of
+species for each trophic level. The landscape is generated following
+the random geometric networks... The set of species is
+characterized... Simulations were initiated with all the patches
+occupied by... As there is no colonisation from outside, the model is
+an absorbing Markov chain and eventually all species reach extinction
+as time goes to infinity. However, before extinction, a species... For
+the parameter combinations used in this study... All simulations were
+first run for a fixed number of time steps...
+
+\subsection{Computing SAR, turnover rate and food web complexity}
+
+SAR, turnover rates and food web complexity for several rates of
+change of the landscape and habitat heterogeneity were recorded by
+counting the number of species in each patch (area)... In the case of
+our simulation results, we counted...
+
+
+\begin{comment}
+%We consider two models of dispersal between
+%sites. Model 1 assumes that dispersal between any two sites occurs
+%only between the neighboors and it is density-independent in the sense
+%that dispersal probabilities are a function of species abundance of
+%the leaving site. Model 1 also assumes that resources, consumers and
+%predators move independently of each other. This means individuals are
+%not aware of the state of each site before the disperse (i.e., the
+%number of prey or predators in each site). Dispersal to the neighboors
+%is also occuring in the model 2, but now individuals have information
+%of each site and they disperse with higher probabilities to the sites
+%that have a low number of predators and a high number of resources
+%available.
+
+% This model can help to simulate how changes of environmental control
+% mechanisms can affect those ecological relationships and to describe
+% it we will use some descriptions as defined in Table 1.
+
+\subsubsection{Model 1: Dispersal dynamics in non-informed landscapes}
+
+Our first model assumes an individual that emigrates moves with
+probability inversely proportional to the distance between the
+original and the receiving sites and to the carrying capacity of the
+receiving site. Thus, individual movement is independent of the state
+of each receiving site. This means individuals do not know the number
+of resources or predators before the emigration. This leads to the
+dispersal rate of species $k_{\mathcal{\phi}}$ in metacommunity
+$\mathcal{\phi}$ from site $j$ to site $i$ (where $\mathcal{\phi}$
+stands either for the basal ($R$), intermediate ($I$), or top predator
+metacommunity ($P$))
+
+\begin{equation}
+  m^{k_{\phi}}_{ij} = \frac{\mathcal{K}^{k_{\phi}}_{i} m_{\phi}}{d_{ij}},
+\end{equation}
+where $\mathcal{K}^{k_{\phi}}_{i}$, $m_{\phi}$, $d_{ij}$ are the
+carrying capacity of the receiving site $i$ of metacommunity $\phi$,
+the background emigration rate of metacommunity $\phi$, and the
+geographical effective distance between site $j$ and site $i$,
+respectively.
+ 
+Given the dispersal rate, the number of individuals of species $k$ in
+metacommunity $\phi$ that move from site $j$ to site $i$ is
+\begin{equation}
+  N^{k_{\phi}}_{ij} =  m^{k_{\phi}}_{ij}  N^{k_{\phi}}_{j},
+\end{equation}
+where $N^{k_{\phi}}_{j}$ is the abundance of species $k$ in site $j$.
+
+%\begin{equation}
+%\vspace{0.25cm}
+%\small{M(i,j) = \overbrace{ \left[ \lambda^{i} \frac{ \Delta_{ij}\,f\,\Theta \left(\Delta_{ij}\,f\,\right) }{ \sum_{k \in Neigh\left(i\right)}\Delta_{ik}\,f\,\Theta \left(\Delta_{ik}\,f\,\right) }\right]}^{Biotic} \overbrace{\left[w_{ij} \frac{ \Delta_{ij}\,f_{\eta}\,\Theta \left(\Delta_{ij}\,f_{\eta}\,\right) }{ \sum_{k \in Neigh\left(i\right)}\Delta_{ik}\,f_{\eta}\,\Theta \left(\Delta_{ik}\,f_{\eta}\,\right) }\right]}^{Abiotic}}
+%%m_{ij}^{k_{\mathcal{\phi}}} = m_{\mathcal{\phi}} \left(\frac{1}{d_{ij}}\right),
+%\label{neutdis}
+%\end{equation}
+%where... is the ... between site $i$ and $j$ and
+%$m_{\mathcal{\phi}}$ is the metacommunity-specific background
+%dispersal rate (we need here a figure with the landscape considered
+%and we also need to simplify the flow chart and explain this model).
+
+\subsubsection{Model 2: Predator-prey ratio dispesal dynamics in informed landscapes}
+
+Our second model assumes the dispersal rates are density-dependent and
+an individual that emigrates has a preference that is a function of
+the state of each site. The state of each site is driven by the number
+of resources available and the number of predators in each site. Thus,
+the migration probability of a species $k_{\mathcal{\phi}}$ in
+metacommunity $\mathcal{\phi}$ from site $j$ to site $i$ is defined as
+the difference between the number of individuals of species that are
+prey and species that are predators of species $k_{\mathcal{\phi}}$ in
+site $i$. This leads to the dispersal rate of species
+$k_{\mathcal{\phi}}$ in metacommunity $\mathcal{\phi}$ from site $j$
+to site $i$
+
+%\begin{equation}
+%  m^{k_{\phi}}_{ij} = \frac{\mathcal{K}^{k_{\phi}}_{i} m_{\phi} \mathcal{M}^{k_{\phi}}_{j}}{d_{ij}},
+%\end{equation}
+
+\begin{equation}
+  m^{k_{\phi}}_{ij} = \frac{\mathcal{K}^{k_{\phi}}_{i} m_{\phi}}{d_{ij}} \mathcal{M}^{k_{\phi}}_{j} \frac{\Delta F^{k\phi}_{ij}}{\sum_{n}^{Neigh(j)}\Delta F^{k\phi}_{nj}},
+\end{equation}
+
+
+where, as in Model 1, $\mathcal{K}^{k_{\phi}}_{i}$, $m_{\phi}$, $d_{ij}$ are
+the carrying capacity of the receiving site $i$ of metacommunity $\phi$, the
+background emigration rate of metacommunity $\phi$, and the geographical
+effective distance between site $j$ and site $i$, respectively. 
+
+To take into account informed landscapes we introduce the concepts of mobility
+probability and the preference of a species a site. The mobility probability of
+species $k$ from site $j$, $\mathcal{M}^{k_{\phi}}_{j}$, is defined as 1 -
+$\frac{r^{k_{\phi}}_{j}}{r^{max_{\phi}}_{j}}$ where $r^{k_{\phi}}_{j}$ and
+$r^{max_{\phi}}_{j}$ are the reproductive success of species $k$ and the
+maximum reproductive success in metacommunity $\phi$ in site $j$, respectively.
+If individuals of species $k$ were able to know their reproductive success in
+any site, then they would have information to decide where to go to increase
+their reproductive success. For example, if species $k$ reproduces in site $j$
+better than in any other site (high $r^{k_{\phi}}_{j}$), then individuals of
+species $k$ prefer to stay in site $j$, thus the mobility probability is close
+to zero.
+
+The preference of a species $k$ for a site $j$, $F^{k\phi}_{i}$, represents how
+good the biotic conditions of $j$ are for species $k$, and is given by the
+difference in the abundance of prey and the abundance of predators of $k$ in
+$j$, $p^{k\phi}_{j}
+- P^{k\phi}_{j}$.  The higher is the difference between the preference of a
+  species $k$ for a site $j$ and its preferences for a site $j$, $\Delta
+F^{k\phi}_{ij}$, ther higher is its probability to move from $j$ to $i$. 
+
+SEGUIR DESDE AQUI
+
+Given the dispersal rate, the number of individuals of species $k$ in
+metacommunity $\phi$ that move from site $j$ to site $i$ is
+\begin{equation}
+  N^{k_{\phi}}_{ij} =  m^{k_{\phi}}_{ij}  N^{k_{\phi}}_{j},
+\end{equation}
+where $N^{k_{\phi}}_{j}$ is the abundance of species $k$ in site $j$.
+
+
+%EQUATION NOT TRANSFORMED!
+%\begin{equation}
+%\vspace{0.25cm}
+%\small{M(i,j) = \overbrace{ \left[ \lambda^{i} \frac{ \Delta_{ij}\,f\,\Theta \left(\Delta_{ij}\,f\,\right) }{ \sum_{k \in Neigh\left(i\right)}\Delta_{ik}\,f\,\Theta \left(\Delta_{ik}\,f\,\right) }\right]}^{Biotic} \overbrace{\left[w_{ij} \frac{ \Delta_{ij}\,f_{\eta}\,\Theta \left(\Delta_{ij}\,f_{\eta}\,\right) }{ \sum_{k \in Neigh\left(i\right)}\Delta_{ik}\,f_{\eta}\,\Theta \left(\Delta_{ik}\,f_{\eta}\,\right) }\right]}^{Abiotic}}
+%\end{equation}
+%
+%\vspace{0.5cm}
+%$$
+%\Delta_{ij}\,f = f^{i,j} - f^{j,i}\left\{ \begin{array}{rl}
+% f^{i,j} = \rho_{H}(j) + \rho_{P}(i) \\
+% f^{j,i} = \rho_{H}(i) + \rho_{P}(j) \\
+%       \end{array} \right.
+%$$
+%
+%\vspace{0.5cm}
+%\centering $\lambda^{i} = \frac{1}{2} \left( 1 - RE^{i} \right)$ \\
+%
+%\vspace{0.25cm}
+%\centering $ RE^{i} = \frac{ New^{t} }{ N^{t} }$\\
+%
+%\vspace{0.25cm}
+%$$
+% \Delta_{ij}\,f_{\eta} = f_{\eta}^{j} - f_{\eta}^{i} \left\{ \begin{array}{rl}
+% f_{\eta}^{i} = \eta_{sp}^{*} - \eta_{sp}^{i} \\
+% f_{\eta}^{j} = \eta_{sp}^{*} - \eta_{sp}^{i} \\
+%       \end{array} \right.
+%$$
+%
+%\vspace{0.25cm}
+%$$w_{ij} = Connectivity \: between \: sites \: i and \: j$$
+
+where... is the ... between site $i$ and $j$ and $m_{\mathcal{\phi}}$
+is the metacommunity-specific background dispersal rate (we need here
+a figure with the landscape considered and we also need to simplify
+the flow chart and explain this model). The migration of a species
+$k_{\mathcal{\phi}}$ from site $j$ to a neighborhood site $i$ occurs
+only if $m_{j}^k(t) > m_{i}^k(t)$. The number of individuals of
+species $k$ that move from $i$ to $j$ must respect the threshold
+imposed by the carrying capacity of the target patch ($cc_j^k(t)$) and
+is defined as seen below:
+
+\subsubsection{Model 3: Predator-prey ratio dispersal dynamics in informed and niche-driven landscapes}
+
+
+\subsection{Demographic dynamics}
+
+In the previous section we have described the dispersal dynamics. Here
+we describe the birth and death probabilities associated with each model...
+
+\subsubsection{Model 1: Dispersal dynamics in non-informed landscapes}
+
+At each time (specify the MC rate) we leave all the individuals of
+each site $i$ to be choosen by a \emph{Multinomial Distribution}
+\cite{levin1981representation}. The chosen individuals can have
+three different behaviors:
+\begin{enumerate}
+\item it can die for natural reasons;
+\item it can eat one individual among its prey; 
+\item if $k$ have eaten an individual among its prey, so it can give an offspring. 
+\end{enumerate}
+
+Individuals from metacommunity $R$ are assumed to have infinity food suply, so
+the only possible behaviors are 1. and 2.. 
+
+For each MC time-step $mc$, this simulation is repeated for all individuals of
+each patch of the landscape. The births will occur only if there is free space
+in the patch $i$, that means, if the number of individuals alive at $i$ is
+lower than its carrying capacity ($cc$). For each time $t$ in which one
+individual of species $k$ gives an offspring in a patch $i$, its number of
+individuals in this patch will be increased by 1; for each time $t$ in which
+one individual of species $k$ dies naturally or by predation in a patch $i$,
+its number of individuals will be decreased by 1. In Figure \ref{fig:Fluxogram}
+we show a fluxogram that summarizes the running of the predation dynamic of the
+model.
+
+%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%% B I R T H      P R O B A B I L I T Y
+%%%%%%%%%%%%%%%%%%
+EQUATION NOT TRANSFORMED!
+
+\vspace{1cm}
+\begin{itemize}
+\item \textbf{Birth Probability}
+\end{itemize}
+
+%\begin{align*}
+%Bp\left(k\right) & = \tikz[baseline]{\node[fill=blue!20,ellipse,anchor=base] (t1) {$\left[1 - \rho\left(k\right)\right]$};} \times \tikz[baseline]{\node[fill=red!20,anchor=base] (t2) {$\left[\sum_{b \in H\left(k\right)}\rho\left(b\right)\left(1-\sum_{c \in P\left(b\right)}\rho\left(c\right)\right)\right]$};} \\
+%& \times \tikz[baseline]{\node[fill=green!20,anchor=base] (t3) {$\left[1-\sum_{c \in P\left(k\right)}\rho\left(c\right) \right]$};}
+%\end{align*}
+
+If $\phi$ is Basal
+
+$B^{k_{\phi}}_{j} = \frac{N^{k_{\phi}}_{j}}{J_{j}} (1-\frac{N^{P(k_{\phi})}_{j}}{J_{j}})$ \\ 
+$D^{k_{\phi}}_{j} = 1.0 $ \\
+$ND^{k_{\phi}}_{j} = \frac{N^{k_{\phi}}_{j}}{J_{j}} \sum (1-\frac{N^{p(k_{\phi})}_{j}}{J_{j}}) (\frac{N^{P(p(k_{\phi}))}_{j}}{J_{j}})$ \\
+$K^{k_{\phi}}_{j} = MAX(K)$ \\
+
+If $\phi$ is Intermediate
+
+$B^{k_{\phi}}_{j} = \frac{N^{k_{\phi}}_{j}}{J_{j}} \sum (\frac{N^{p(k_{\phi})}_{j}}{J_{j}}) (1-\frac{N^{P(p(k_{\phi}))}_{j}}{J_{j}}) (1-\frac{N^{P(k_{\phi})}_{j}}{J_{j}})$  \\
+$D^{k_{\phi}}_{j} = \frac{N^{k_{\phi}}_{j}}{J_{j}} \sum (1 - \frac{N^{p(k_{\phi})}_{j}}{J_{j}}) (\frac{N^{P(p(k_{\phi}))}_{j}}{J_{j}}) (1-\frac{N^{P(k_{\phi})}_{j}}{J_{j}})$ \\
+$ND^{k_{\phi}}_{j} = \frac{N^{k_{\phi}}_{j}}{J_{j}} \sum (1-\frac{N^{p(k_{\phi})}_{j}}{J_{j}}) (\frac{N^{P(p(k_{\phi}))}_{j}}{J_{j}})$ \\
+$K^{k_{\phi}}_{j} = a \frac{N^{p(k_{\phi})}_{j}}{N^{P(p(k_{\phi}))}}$ \\
+
+If $\phi$ is Top 
+
+$B^{k_{\phi}}_{j} = \frac{N^{k_{\phi}}_{j}}{J_{j}} \sum (\frac{N^{p(k_{\phi})}_{j}}{J_{j}}) (1-\frac{N^{P(p(k_{\phi}))}_{j}}{J_{j}})$  \\
+$D^{k_{\phi}}_{j} = \frac{N^{k_{\phi}}_{j}}{J_{j}} \sum (1 - \frac{N^{p(k_{\phi})}_{j}}{J_{j}}) (\frac{N^{P(p(k_{\phi}))}_{j}}{J_{j}})$ \\
+$ND^{k_{\phi}}_{j} = \frac{N^{k_{\phi}}_{j}}{J_{j}} \sum (1-\frac{N^{p(k_{\phi})}_{j}}{J_{j}}) (\frac{N^{P(p(k_{\phi}))}_{j}}{J_{j}})$ \\
+$K^{k_{\phi}}_{j} = a \frac{N^{p(k_{\phi})}_{j}}{N^{P(p(k_{\phi}))}}$ \\
+
+
+
+\textbf{Where:} Availability of Resources of Basal Species is 1.0
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%% D E A T H     P R O B A B I L I T Y
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%EQUATION NOT TRANSFORMED!
+%
+%\vspace{1cm}
+%\begin{itemize}
+%\item \textbf{Death Probability}
+%\end{itemize}
+%
+%\begin{align*}
+%Dp\left(k\right) & = \tikz[baseline]{\node[fill=blue!20,ellipse,anchor=base] (t1) {$\left[\rho\left(k\right)\right]$};} \times \tikz[baseline]{\node[fill=red!20,anchor=base] (t2) {$\left[\sum_{b \in H\left(k\right)}\left(1-\rho\left(b\right)\right)\left(\sum_{c \in P\left(b\right)}\rho\left(c\right)\right)\right]$};} \\ 
+%& \times \tikz[baseline]{\node[fill=green!20,anchor=base] (t3) {$\left[1-\sum_{c \in P\left(k\right)}\rho\left(c\right) \right]$};} 
+%\end{align*}
+
+\textbf{Where:} Death Probability of Basal Species is 1.0
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%% N A T U R A L     D E A T H     P R O B A B I L I T Y
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%EQUATION NOT TRANSFORMED!
+%
+%\vspace{1cm}
+%\begin{itemize}
+%\item \textbf{Natural Death Probability}
+%\end{itemize}
+%
+%\begin{align*}
+%NDp\left(k\right) & = \tikz[baseline]{\node[fill=blue!20,ellipse,anchor=base] (t1) {$\left[\rho\left(k\right)\right]$};} \times \tikz[baseline]{\node[fill=red!20,anchor=base] (t2) {$\left[\sum_{b \in H\left(k\right)}\left(1-\rho\left(b\right)\right)\left(\sum_{c \in P\left(b\right)}\rho\left(c\right)\right)\right]$};} \\ 
+%& \times \tikz[baseline]{\node[fill=green!20,anchor=base] (t3) {$\left[1-\sum_{c \in P\left(k\right)}\rho\left(c\right) \right]$};} 
+%\end{align*}
+
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%% S P E C I E S     C A R R Y I N G     C A P A C I T Y
+%%%%%%%%%%%%%%%%
+EQUATION NOT TRANSFORMED!
+
+%\vspace{1cm}
+%\begin{itemize}
+%\item \textbf{Carrying Capacity (for each species in each site)}
+%\end{itemize}
+%
+%\begin{align*}
+%CC\left(k\right) & =  \tikz[baseline]{\node[fill=red!20,ellipse,anchor=base] (t2) {$\left[\sum_{b \in H\left(k\right)}\frac{\left(\rho\left(b\right)\right)}{\left(\sum_{c \in P\left(b\right)}\rho\left(c\right)\right)}\right]$};}
+%\end{align*}
+
+\subsubsection{Model 2: Predator-prey ratio dispesal dynamics in informed landscapes}
+
+At each time (specify the MC rate) we leave all the individuals of
+each site $i$ to be choosen by a \emph{Multinomial Distribution}
+\cite{levin1981representation}. The chosen individual $k$ can have
+three different behaviors:
+\begin{enumerate}
+\item it can die for natural reasons;
+\item it can eat one individual among its prey; 
+\item if $k$ have eaten an individual among its prey, so it can give an offspring. 
+\end{enumerate}
+If $k$ individual is not a predator (if it is a basal species) the
+model assumes it has infinity food suply and the only possible
+behaviors are 1. and 2.. For each MC time-step $mc$, this simulation
+is repeated for all individuals of each patch of the landscape. The
+births will occur only if there is free space in the patch $i$, that
+means, if the number of individuals alive at $i$ is lower than its
+carrying capacity ($cc$). For each time $t$ in which one individual of
+species $k$ gives an offspring in a patch $i$, its number of
+individuals in this patch will be increased by 1; for each time $t$ in
+which one individual of species $k$ dies naturally or by predation in
+a patch $i$, its number of individuals will be decreased by 1. In
+Figure \ref{fig:Fluxogram} we show a fluxogram that summarizes the
+running of the predation dynamic of the model.
+
+%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%% B I R T H      P R O B A B I L I T Y
+%%%%%%%%%%%%%%%%%%
+EQUATION NOT TRANSFORMED!
+
+%\vspace{1cm}
+%\begin{itemize}
+%\item \textbf{Birth Probability}
+%\end{itemize}
+%
+%
+%\begin{align*}
+%Bp\left(k\right) & = \tikz[baseline]{\node[fill=blue!20,ellipse,anchor=base] (t1) {$\left[1 - \rho\left(k\right)\right]$};} \times \tikz[baseline]{\node[fill=red!20,anchor=base] (t2) {$\left[\sum_{b \in H\left(k\right)}\rho\left(b\right)\left(1-\sum_{c \in P\left(b\right)}\rho\left(c\right)\right)\right]$};} \\
+%& \times \tikz[baseline]{\node[fill=green!20,anchor=base] (t3) {$\left[1-\sum_{c \in P\left(k\right)}\rho\left(c\right) \right]$};}
+%\end{align*}
+
+%\textbf{Where:} Availability of Resources of Basal Species is 1.0
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%% D E A T H     P R O B A B I L I T Y
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%EQUATION NOT TRANSFORMED!
+%
+%\vspace{1cm}
+%\begin{itemize}
+%\item \textbf{Death Probability}
+%\end{itemize}
+%
+%\begin{align*}
+%Dp\left(k\right) & = \tikz[baseline]{\node[fill=blue!20,ellipse,anchor=base] (t1) {$\left[\rho\left(k\right)\right]$};} \times \tikz[baseline]{\node[fill=red!20,anchor=base] (t2) {$\left[\sum_{b \in H\left(k\right)}\left(1-\rho\left(b\right)\right)\left(\sum_{c \in P\left(b\right)}\rho\left(c\right)\right)\right]$};} \\ 
+%& \times \tikz[baseline]{\node[fill=green!20,anchor=base] (t3) {$\left[1-\sum_{c \in P\left(k\right)}\rho\left(c\right) \right]$};} 
+%\end{align*}
+%
+%\textbf{Where:} Death Probability of Basal Species is 1.0
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% N A T U R A L     D E A T H     P R O B A B I L I T Y
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%EQUATION NOT TRANSFORMED!
+%
+%\vspace{1cm}
+%\begin{itemize}
+%\item \textbf{Natural Death Probability}
+%\end{itemize}
+%
+%\begin{align*}
+%NDp\left(k\right) & = \tikz[baseline]{\node[fill=blue!20,ellipse,anchor=base] (t1) {$\left[\rho\left(k\right)\right]$};} \times \tikz[baseline]{\node[fill=red!20,anchor=base] (t2) {$\left[\sum_{b \in H\left(k\right)}\left(1-\rho\left(b\right)\right)\left(\sum_{c \in P\left(b\right)}\rho\left(c\right)\right)\right]$};} \\ 
+%& \times \tikz[baseline]{\node[fill=green!20,anchor=base] (t3) {$\left[1-\sum_{c \in P\left(k\right)}\rho\left(c\right) \right]$};} 
+%\end{align*}
+%
+%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%% S P E C I E S     C A R R Y I N G     C A P A C I T Y
+%%%%%%%%%%%%%%%%%
+%EQUATION NOT TRANSFORMED!
+%
+%\vspace{1cm}
+%\begin{itemize}
+%\item \textbf{Carrying Capacity (for each species in each site)}
+%\end{itemize}
+%
+%\begin{align*}
+%CC\left(k\right) & =  \tikz[baseline]{\node[fill=red!20,ellipse,anchor=base] (t2) {$\left[\sum_{b \in H\left(k\right)}\frac{\left(\rho\left(b\right)\right)}{\left(\sum_{c \in P\left(b\right)}\rho\left(c\right)\right)}\right]$};}
+%\end{align*}
+
+
+\subsubsection{Model 3: Predator-prey ratio dispersal dynamics in informed and niche-driven landscapes}
+
+
+\subsection{Spatial landscapes}
+
+We consider several spatial configurations. We start with a
+2-dimensional toroidal lattice where individuals only move to the
+nearest 4-neighborhoods.
+
+\subsection{Multi-trophic metacommunity dynamics}
+
+Here, we describe the equations that combine dispersal, trophic and
+population dynamics across multiple sites and trophic levels in a
+broad geographic region. We track demography and species abundances in
+each site by considering at each time step birth-death events across
+all the sites.
+
+%The new individual can be of the same species as the dead individual
+%or of another species of the same metacommunity. The recruitment is
+%either due to local reproduction (birth) or dispersal from another
+%sampled site, or immigration from the regional species pool. The
+%following equations provide a mathematical description of the
+%multi-trophic metacommunity dynamics
+EQUATION NOT TRANSFORMED!
+
+\begin{equation}
+ \left\{\left[ 1 - NDp\left(k\right) \right]\left[ \sum_{b \in H\left(k\right)}\rho\left(b\right)Dp\left(b\right) \right]\left[Bp\left(k\right)\right] - \left[\sum_{c \in P\left(k\right)}\rho\left(c\right)\left( 1-NDp \left(c \right) \right)\frac{\rho\left(k\right)}{\sum_{d \in H\left(c\right)}\rho\left(d\right)}Dp\left(k\right)\right] - \left[NDp\left(k\right)\right] \right\} 
+\end{equation}
+where ... describes the probability to choose...
+
+\subsection{Spatial patterns of ecological and spatial networks}
+
+
+\subsubsection{Simulations}
+
+We use a Monte Carlo (MC) approach to simulate the dispersal and
+predation dynamics. Sites are represented as nodes of a geographical
+neighborhood network and the connectivity of those sites are
+represented as edges of this network (refs). Trophic relationships
+among species within each site are represented by a directed network
+in which each node represents a species and each directed link
+represents a trophic relationship between a pair of species.
+
+Define background emigration rate and the values explored
+Define carrying capacity used, equal or different across sites. 
+
+
+%\subsection{Predation dynamics}
+
+%At each time of the MC simulation we leave all the individuals of each
+%patch $i$ to be choosen by a \emph{Multinomial Distribution}
+%\cite{levin1981representation}. The chosen individual $k$ can have
+%three different behaviors:
+%\begin{enumerate}
+%\item it can die for natural reasons; 
+%\item it can eat one individual among its prey; 
+%\item if $k$ have eaten an individual among its prey, so it can give an offspring. 
+%\end{enumerate}
+
+%If $k$ individual is not a predator (if it is a basal species) the
+%model assumes it has infinity food suply and the only possible
+%behaviors are 1. and 2.. For each MC time-step $mc$, this simulation
+%is repeated for all individuals of each patch of the landscape. The
+%births will occur only if there is free space in the patch $i$, that
+%means, if the number of individuals alive at $i$ is lower than its
+%carrying capacity ($cc$). For each time $t$ in which one individual of
+%species $k$ gives an offspring in a patch $i$, its number of
+%individuals in this patch will be increased by 1; for each time $t$ in
+%which one individual of species $k$ dies naturally or by predation in
+%a patch $i$, its number of individuals will be decreased by 1. In
+%Figure \ref{fig:Fluxogram} we show a fluxogram that summarizes the
+%running of the predation dynamic of the model.
+
+%\vspace{0.25cm}
+%\subsubsection{Predation Equations}
+
+%\vspace{0.25cm}
+%\begin{itemize}
+%\item \textbf{General Equation}
+%\end{itemize}
+
+%\begin{equation}
+% \left\{\left[ 1 - NDp\left(k\right) \right]\left[ \sum_{b \in H\left(k\right)}\rho\left(b\right)Dp\left(b\right) \right]\left[Bp\left(k\right)\right] - \left[\sum_{c \in P\left(k\right)}\rho\left(c\right)\left( 1-NDp \left(c %\right) \right)\frac{\rho\left(k\right)}{\sum_{d \in H\left(c\right)}\rho\left(d\right)}Dp\left(k\right)\right] - \left[NDp\left(k\right)\right] \right\} 
+%\end{equation}
+
+%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%% B I R T H      P R O B A B I L I T Y
+%%%%%%%%%%%%%%%%%%
+%\vspace{1cm}
+%\begin{itemize}
+%\item \textbf{Self-Organized Parameters: Birth Probability}
+%\end{itemize}
+
+%\begin{align*}
+%Bp\left(k\right) & = \tikz[baseline]{\node[fill=blue!20,ellipse,anchor=base] (t1) {$\left[1 - \rho\left(k\right)\right]$};} \times \tikz[baseline]{\node[fill=red!20,anchor=base] (t2) {$\left[\sum_{b \in H\left(k\right)}\rho\left(b\right)\left(1-\sum_{c \in P\left(b\right)}\rho\left(c\right)\right)\right]$};} \\
+%& \times \tikz[baseline]{\node[fill=green!20,anchor=base] (t3) {$\left[1-\sum_{c \in P\left(k\right)}\rho\left(c\right) \right]$};}
+%\end{align*}
+
+%\textbf{Where:} Availability of Resources of Basal Species is 1.0
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%% D E A T H     P R O B A B I L I T Y
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\vspace{1cm}
+%\begin{itemize}
+%\item \textbf{Self-Organized Parameters: Death Probability}
+%\end{itemize}
+
+%\begin{align*}
+%Dp\left(k\right) & = \tikz[baseline]{\node[fill=blue!20,ellipse,anchor=base] (t1) {$\left[\rho\left(k\right)\right]$};} \times \tikz[baseline]{\node[fill=red!20,anchor=base] (t2) {$\left[\sum_{b \in H\left(k\right)}\left(1-\rh%o\left(b\right)\right)\left(\sum_{c \in P\left(b\right)}\rho\left(c\right)\right)\right]$};} \\ 
+%& \times \tikz[baseline]{\node[fill=green!20,anchor=base] (t3) {$\left[1-\sum_{c \in P\left(k\right)}\rho\left(c\right) \right]$};} 
+%\end{align*}
+
+%\textbf{Where:} Death Probability of Basal Species is 1.0
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%% N A T U R A L     D E A T H     P R O B A B I L I T Y
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\vspace{1cm}
+%\begin{itemize}
+%\item \textbf{Self-Organized Parameters: Natural Death Probability}
+%\end{itemize}
+
+%\begin{align*}
+%NDp\left(k\right) & = \tikz[baseline]{\node[fill=blue!20,ellipse,anchor=base] (t1) {$\left[\rho\left(k\right)\right]$};} \times \tikz[baseline]{\node[fill=red!20,anchor=base] (t2) {$\left[\sum_{b \in H\left(k\right)}\left(1-\r%ho\left(b\right)\right)\left(\sum_{c \in P\left(b\right)}\rho\left(c\right)\right)\right]$};} \\ 
+%& \times \tikz[baseline]{\node[fill=green!20,anchor=base] (t3) {$\left[1-\sum_{c \in P\left(k\right)}\rho\left(c\right) \right]$};} 
+%\end{align*}
+
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%% S P E C I E S     C A R R Y I N G     C A P A C I T Y
+%%%%%%%%%%%%%%%%
+%\vspace{1cm}
+%\begin{itemize}
+%\item \textbf{Self-Organized Parameters: Carrying Capacity (for each species in each site)}
+%\end{itemize}
+
+%\begin{align*}
+%CC\left(k\right) & =  \tikz[baseline]{\node[fill=red!20,ellipse,anchor=base] (t2) {$\left[\sum_{b \in H\left(k\right)}\frac{\left(\rho\left(b\right)\right)}{\left(\sum_{c \in P\left(b\right)}\rho\left(c\right)\right)}\right]$}%;}
+%\end{align*}
+
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%% M O B I L I T Y 
+%%%%%%%%%%%%%%%% 
+
+%\subsection{Dispersal Migration}
+
+%The model allows the Dispersal Migration of individuals living in any
+%patche $i$ to each patch in its neighborhood.  Is
+%assumed that, for each time step, each species in the landscape has a
+%level of preference to each patch. The preference of a species $k$ for
+%a patch $i$ in time $t$ ($Pref_{i}^k(t)$) is defined as the difference
+%between the number of individuals of species that are prey and species
+%that are predators of $k$ in that patch. The migration of a species
+%$k$ from a patch $i$ to a neighborhood patch $j$ will occur only if
+%$Pref_{j}^k(t) > Pref_{i}^k(t)$. The number of individuals of species
+%$k$ that move from $i$ to $j$ must respect the threshold imposed by
+%the carrying capacity of the target patch ($cc_j^k(t)$) and is defined
+%as seen below:
+
+%\vspace{0.25cm}
+%\subsubsection{Migration Equations}
+
+%%%%%%\begin{frame}
+%%%%%%\frametitle{Mobility Dynamics}
+%%%%%%%\includegraphics[width=1.0\textwidth]{./mobility.eps}
+%%%%%%\end{frame}
+%%%%%%
+
+%\vspace{1cm}
+%\begin{itemize}
+%    \item \textbf{Mobility of species \emph{sp} from site \emph{i} to \emph{j}} 
+%\end{itemize}
+
+%$\Delta N_{sp}\left(i\right) = \sum_{j \in Neigh\left(i\right)} \left( \left( N_{sp}(j) \; M_{sp}(j,i) \; - \; \tikz[baseline]{\node[fill=blue!20,anchor=base] (t1) {$N_{sp}(i) $};} \tikz[baseline]{\node[fill=red!20,anchor=base%] (t2) {$M_{sp}(i,j)$};} \right) \right)$
+
+
+%\vspace{0.25cm} \small{$M(i,j) = \overbrace{ \left[ \lambda^{i} \frac{
+%        \Delta_{ij}\,f\,\Theta \left(\Delta_{ij}\,f\,\right) }{
+%        \sum_{k \in Neigh\left(i\right)}\Delta_{ik}\,f\,\Theta
+%        \left(\Delta_{ik}\,f\,\right) }\right]}^{Biotic}
+%  \overbrace{\left[w_{ij} \frac{ \Delta_{ij}\,f_{\eta}\,\Theta
+%        \left(\Delta_{ij}\,f_{\eta}\,\right) }{ \sum_{k \in
+%          Neigh\left(i\right)}\Delta_{ik}\,f_{\eta}\,\Theta
+%        \left(\Delta_{ik}\,f_{\eta}\,\right) }\right]}^{Abiotic}$}
+
+%\vspace{0.5cm}
+%$$
+%\Delta_{ij}\,f = f^{i,j} - f^{j,i}\left\{ \begin{array}{rl}
+% f^{i,j} = \rho_{H}(j) + \rho_{P}(i) \\
+% f^{j,i} = \rho_{H}(i) + \rho_{P}(j) \\
+%       \end{array} \right.
+%$$
+
+%\vspace{0.5cm}
+%\centering $\lambda^{i} = \frac{1}{2} \left( 1 - RE^{i} \right)$ \\
+
+%\vspace{0.25cm}
+%\centering $ RE^{i} = \frac{ New^{t} }{ N^{t} }$
+
+%\vspace{0.25cm}
+%$$
+% \Delta_{ij}\,f_{\eta} = f_{\eta}^{j} - f_{\eta}^{i} \left\{ \begin{array}{rl}
+% f_{\eta}^{i} = \eta_{sp}^{*} - \eta_{sp}^{i} \\
+% f_{\eta}^{j} = \eta_{sp}^{*} - \eta_{sp}^{i} \\
+%       \end{array} \right.
+%$$
+
+%\vspace{0.25cm}
+%$$w_{ij} = Connectivity \: between \: sites \: i and \: j$$
+
+%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%
+
+%\vspace{1cm}
+% Do NOT remove this, even if you are not including acknowledgments
+\end{comment}
+
