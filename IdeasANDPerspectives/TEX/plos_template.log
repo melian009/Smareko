@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.5.1)  21 FEB 2014 15:40
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.5.1)  24 FEB 2014 15:50
 entering extended mode
  %&-line parsing enabled.
 **plos_template
@@ -550,7 +550,9 @@ Package caption Info: End \AtBeginDocument code.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 77.
  (./introduction.tex)
-(./materialmethods.tex
+(./materialmethods.tex [1
+
+]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 7.
 LaTeX Font Info:    Try loading font information for U+msa on input line 11.
@@ -558,20 +560,17 @@ LaTeX Font Info:    Try loading font information for U+msa on input line 11.
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
 LaTeX Font Info:    Try loading font information for U+msb on input line 11.
-
-(/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
+ (/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
-) [1
-
-]) (./results.tex)
+)) (./results.tex)
 (./discussion.tex) (./plos_template.bbl [2]) [3] (./plos_template.aux) ) 
 Here is how much of TeX's memory you used:
- 13615 strings out of 493849
- 269977 string characters out of 1152847
+ 13619 strings out of 493849
+ 270043 string characters out of 1152847
  381381 words of memory out of 3000000
- 16617 multiletter control sequences out of 15000+50000
+ 16619 multiletter control sequences out of 15000+50000
  8427 words of font info for 28 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 56i,5n,56p,479b,229s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 56i,5n,56p,479b,227s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on plos_template.dvi (3 pages, 14916 bytes).
+Output written on plos_template.dvi (3 pages, 16128 bytes).

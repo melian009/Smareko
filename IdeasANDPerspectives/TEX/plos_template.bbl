@@ -13,6 +13,18 @@
   \textsc{Annotation:}\ #2\end{quotation}}
 \providecommand{\eprint}[2][]{\url{#2}}
 
+\bibitem{haegemanLoreau2014}
+Haegeman B, Loreau M (2014) General relationships between consumer dispersal,
+  resource dispersal and metacommunity diversity.
+\newblock Ecology Letters 17: 175--184.
+\bibAnnoteFile{haegemanLoreau2014}
+
+\bibitem{whittaker2008}
+Whittaker RJ, Triantis KA, Ladle RJ (2013) A general dynamic theory of oceanic
+  island biogeography.
+\newblock J Biogeography 35: 977--994.
+\bibAnnoteFile{whittaker2008}
+
 \bibitem{rybickihanski2013}
 Rybicki J, Hanski I (2013) Species-area relationships and extinctions caused by
   habitat loss and fragmentation.
