@@ -26,8 +26,8 @@ png("./multitrophicmetacommunity.png",width=800,height=800);
 		xmin<-0
 		xmax<-0.1
 		while(xmax <= 1){
-			yrange<-which((y>ymin) & (y<=ymax))
-			xrange<-which((x>xmin) & (x<=xmax))
+			yrange<-which((y>ymin) & (y<ymax))
+			xrange<-which((x>xmin) & (x<xmax))
 			xyrange<-intersect(xrange,yrange)
 			subsample<-sample(xyrange,percent*length(xyrange))
 			lines(x[subsample],y[subsample])
