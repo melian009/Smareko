@@ -32,7 +32,7 @@ Type 'q()' to quit R.
 > 
 > png("./metacommunity.png",width=800,height=800);
 > 	plot(x,y,xlim=c(0,1),ylim=c(0,1),axes=F,xlab="",ylab="",col=colors)
-> 	box();
+> #	box();
 > dev.off();
 null device 
           1 
@@ -49,8 +49,8 @@ null device
 + 		xmin<-0
 + 		xmax<-0.1
 + 		while(xmax <= 1){
-+ 			yrange<-which((y>ymin) & (y<=ymax))
-+ 			xrange<-which((x>ymin) & (x<=ymax))
++ 			yrange<-which((y>ymin) & (y<ymax))
++ 			xrange<-which((x>xmin) & (x<xmax))
 + 			xyrange<-intersect(xrange,yrange)
 + 			subsample<-sample(xyrange,percent*length(xyrange))
 + 			lines(x[subsample],y[subsample])
@@ -61,11 +61,73 @@ null device
 + 		ymin<-ymax;
 + 		ymax<-ymax+0.1;
 + 	}
-> 	box();
+> #	box();
+> dev.off();
+null device 
+          1 
+> 
+> 
+> png("./multitrophicmetacommunity_staticlandscape.png",width=800,height=800);
+> 	plot(x,y,xlim=c(0,1),ylim=c(0,1),axes=F,xlab="",ylab="",col=colors)
+> 	
+> 	percent<-0.2;
+> 	ymin<-0
+> 	ymax<-0.1
+> 	lines(x=c(0,1),y=c(ymin,ymin));	
+> 	while(ymax <= 1){
++ 		xmin<-0
++ 		xmax<-0.1
++ 		lines(x=c(xmin,xmin),y=c(0,1));	
++ 		while(xmax <= 1){
++ 			yrange<-which((y>ymin) & (y<ymax))
++ 			xrange<-which((x>xmin) & (x<xmax))
++ 			xyrange<-intersect(xrange,yrange)
++ 			subsample<-sample(xyrange,percent*length(xyrange))
++ 			lines(x[subsample],y[subsample])
++ 			lines(x=c(xmax,xmax),y=c(0,1));	
++ 			xmin<-xmax;
++ 			xmax<-xmax+0.1;
++ 		}
++ 		lines(x=c(0,1),y=c(ymax,ymax));	
++ 		ymin<-ymax;
++ 		ymax<-ymax+0.1;
++ 	}
+> #	box();
+> dev.off();
+null device 
+          1 
+> 
+> 
+> png("./multitrophicmetacommunity_dynamiclandscape_1.png",width=800,height=800);
+> 	plot(x,y,xlim=c(0,1),ylim=c(0,1),axes=F,xlab="",ylab="",col=colors)
+> 	
+> 	percent<-0.2;
+> 	ymin<-0
+> 	ymax<-0.1
+> 	lines(x=c(0,1),y=c(ymin,ymin));	
+> 	while(ymax <= 1){
++ 		xmin<-0
++ 		xmax<-0.1
++ 		lines(x=c(xmin,xmin),y=c(0,1));	
++ 		while(xmax <= 1){
++ 			yrange<-which((y>ymin) & (y<ymax))
++ 			xrange<-which((x>xmin) & (x<xmax))
++ 			xyrange<-intersect(xrange,yrange)
++ 			subsample<-sample(xyrange,percent*length(xyrange))
++ 			lines(x[subsample],y[subsample])
++ 			lines(x=c(xmax,xmax),y=c(0,1));	
++ 			xmin<-xmax;
++ 			xmax<-xmax+0.1;
++ 		}
++ 		lines(x=c(0,1),y=c(ymax,ymax));	
++ 		ymin<-ymax;
++ 		ymax<-ymax+0.1;
++ 	}
+> #	box();
 > dev.off();
 null device 
           1 
 > 
 > proc.time()
    user  system elapsed 
-  0.532   0.512   0.485 
+  0.880   0.512   0.823 
