@@ -36,7 +36,7 @@ png("./multitrophicmetacommunity.png",width=1366,height=768);
 			xrange<-which((x>xmin) & (x<xmax))
 			xyrange<-intersect(xrange,yrange)
 			subsample<-sample(xyrange,percent*length(xyrange))
-			lines(x[subsample],y[subsample],col="lightgray")
+			lines(x[subsample],y[subsample],col="lightgray",lwd=2)
 	
 			xmin<-xmax;
 			xmax<-xmax+0.1;
@@ -67,7 +67,7 @@ png("./multitrophicmetacommunity_staticlandscape.png",width=1366,height=768);
 			xrange<-which((x>xmin) & (x<xmax))
 			xyrange<-intersect(xrange,yrange)
 			subsample<-sample(xyrange,percent*length(xyrange))
-			lines(x[subsample],y[subsample],col="lightgray")
+			lines(x[subsample],y[subsample],col="lightgray",lwd=2)
 			lines(x=c(xmax,xmax),y=c(0,1),col="white");	
 			xmin<-xmax;
 			xmax<-xmax+0.1;

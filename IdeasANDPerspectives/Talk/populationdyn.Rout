@@ -59,7 +59,7 @@ null device
 + 			xrange<-which((x>xmin) & (x<xmax))
 + 			xyrange<-intersect(xrange,yrange)
 + 			subsample<-sample(xyrange,percent*length(xyrange))
-+ 			lines(x[subsample],y[subsample],col="lightgray")
++ 			lines(x[subsample],y[subsample],col="lightgray",lwd=2)
 + 	
 + 			xmin<-xmax;
 + 			xmax<-xmax+0.1;
@@ -92,7 +92,7 @@ null device
 + 			xrange<-which((x>xmin) & (x<xmax))
 + 			xyrange<-intersect(xrange,yrange)
 + 			subsample<-sample(xyrange,percent*length(xyrange))
-+ 			lines(x[subsample],y[subsample],col="lightgray")
++ 			lines(x[subsample],y[subsample],col="lightgray",lwd=2)
 + 			lines(x=c(xmax,xmax),y=c(0,1),col="white");	
 + 			xmin<-xmax;
 + 			xmax<-xmax+0.1;
@@ -284,4 +284,4 @@ null device
 > 
 > proc.time()
    user  system elapsed 
-  2.284   0.036   2.313 
+  2.104   0.028   2.137 
