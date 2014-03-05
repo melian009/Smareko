@@ -17,8 +17,9 @@ palette2<-function(x){
         return(colors[pos+1]);
 }
 
-files<-c("randomlanscapes_lowmigrationpool_highmigration.txt","randomlanscapes_lowmigrationpool_lowmigration.txt","randomlanscapes_lowmigrationpool_mediummigration.txt");
-parameters<-c("High Migration","Low Migration","Medium Migration");
+files<-c("highhigh_randomlandscapes.dat","highhigh_seasonallandscapes.dat","highlow_randomlandscapes.dat","highlow_seasonallandscapes.dat");
+
+parameters<-c("HighHigh-Random","HighHigh-Seasonal","HighLow-Random","HighLow-Seasonal");
 
 for (f in 1:length(files)){
 
@@ -43,7 +44,7 @@ meanRadius <-dat[,17];
 
 breaks <- seq(min(gamma), max(gamma),length.out=100)
 
-png(paste(files[f],"_meanRadius.png",sep=""),width=1080,height=800);
+png(paste(files[f],"_meanRadius.png",sep=""),width=1366,height=768);
 layout(matrix(c(1,2), nrow=2, ncol=1), widths=c(5,5), heights=c(5,1))
 layout.show(2)
 plot(Prob_DL,meanRadius,col=pal.1(length(breaks)-1),pch=15,main=parameters[f],xlab="Prob DL",ylab="Mean Radius",ylim=c(0,700));
@@ -52,10 +53,10 @@ image.scale(gamma, col=pal.1(length(breaks)-1), breaks=breaks, horiz=TRUE)
 box()
 dev.off();
 
-png(paste(files[f],"_varRadius.png",sep=""),width=1080,height=800);
+png(paste(files[f],"_varRadius.png",sep=""),width=1366,height=768);
 layout(matrix(c(1,2), nrow=2, ncol=1), widths=c(5,5), heights=c(5,1))
 layout.show(2)
-plot(Prob_DL,varRadius,col=pal.1(length(breaks)-1),pch=15,main=parameters[f],xlab="Prob DL",ylab="Var Radius");
+plot(Prob_DL,varRadius,col=pal.1(length(breaks)-1),pch=15,main=parameters[f],xlab="Prob DL",ylab="Var Radius",ylim=c(0,70000));
 par(mar=c(3,1,1,1))
 image.scale(gamma, col=pal.1(length(breaks)-1), breaks=breaks, horiz=TRUE)
 box()
