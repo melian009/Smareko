@@ -5,7 +5,7 @@
 %Feb-Mar 2014
 %De Santana, Klecka and Melian (2014)
 %---------------------------------------------------------------
-for ri = 1:1000;
+for ri = 1:10;
 rand('seed',sum(100*clock));Gmax = 1000;
 G = unidrnd(Gmax,1,1);%Generations could be variable
 s = rand;%prob to be a static landscape

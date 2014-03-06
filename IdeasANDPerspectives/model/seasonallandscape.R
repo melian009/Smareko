@@ -5,6 +5,12 @@
 #Feb-Mar 2014
 #De Santana, Klecka and Melian (2014)
 #---------------------------------------------------------------
+library(igraph)
+library(animation)
+
+randomGeomNet
+
+
 replicate<-10;
 #rand('seed',sum(100*clock));
 Gmax = 1000;
@@ -12,7 +18,7 @@ Xrange = 1000;
 Yrange = 1000;
 for (ri in 1:replicate){
 	G<-runif(1,1,Gmax);#%Generations could be variable
-	s<-runif(1,1,maximumG)/maximumG.;#prob to be a static landscape
+	s<-runif(1,1,Gmax)/Gmax;#prob to be a static landscape
 	S<-100;J<-100;#S sites and J inds. per site
 	#%Resources
 	newspeciesR = 1;R = array(1,dim=c(S,J));mr = runif(1,0.2,0.7);vr = runif(1,0.1,0.5);
@@ -50,7 +56,11 @@ for (ri in 1:replicate){
 				D[i,j] = 0;
 			}	
 		}
-	} 
+	}
+#To plot the landscape network
+	png(paste("./Landscape_",ri,".png",sep=""),width=1366,height=768);
+	plot(graph.adjacency(as.matrix(D)),vertex.size=0.001,vertex.label="",edge.arrow.size=0,edge.color="red",layout=as.matrix(n));
+	dev.off();
 	
 	DI=t(Di+Di);
 	Dc<-DI;
@@ -59,23 +69,25 @@ for (ri in 1:replicate){
 	}
 	D1=t(D+D);
 	cdynamics = 0;
-	
-	  
+	countgen=0; 
 	for (k in 1:G){#population-metapopulation-metacommunity dynamics (not-tracking multitrophic metacommunity dynamics!)
 	     if (runif(1,0,1) > s){#landscape dynamic: rgn
 	        cdynamics = cdynamics + 1;
+
+		D = array(0,dim=c(S,S));#theshold matrix
+	        Di = array(0,dim=c(S,S));#distance matrix
+	
 	        #r = unifrnd(10,700);#random landscape: r uniform 10 (all isolated sites),700 (all connected sites)
 	        A = 100;#amplitude, is the peak deviation: 350 to match simulations in random landscapes
 	        f = 0.01;#ordinary frequency, number of cycles that occur each second of time
 	        sig = 0;#the phase
-	        r = A*sin(2*pi*f*A + sig) + A;#starting point with r approx. A
-	       
-	        D = array(0,dim=c(S,S));#theshold matrix
-	        Di = array(0,dim=c(S,S));#distance matrix
-	        #mu = S*(e^(-pi * (r/1000)^2 * S));#site connectivity
+	        countgen = countgen + 1;
+	        r = A*sin(2*pi*f*countgen + sig) + A;#starting point with r approx. A and countgen is generation season
+	       	#mu = S*(e^(-pi * (r/1000)^2 * S));#site connectivity
 	        mu = S*(exp((-pi * (r/1000)^2 * S)));#site connectivity
 		n[,1]<-runif(S,0,1000);
 		n[,2]<-runif(S,0,1000);
+
 	        for (i in 1:(S-1)){
 	            for (j in (i+1):S){
 	                A = (n[i,1] - n[j,1])^2;#Euclidean distance
@@ -95,7 +107,8 @@ for (ri in 1:replicate){
 			Dc[i,]<-cumsum(DI[i,]);
 		}
 		D1=t(D+D);
-	     }#rand   
+	     }#rand  
+ 
 		for (j in 1:(S*J)){
 			#R
 			KillHab = runif(1,1,S);KillInd = runif(1,1,J);mvb = runif(1,0,1);
