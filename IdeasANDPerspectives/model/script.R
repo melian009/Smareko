@@ -47,7 +47,7 @@ breaks <- seq(min(gamma), max(gamma),length.out=100)
 png(paste(files[f],"_meanRadius.png",sep=""),width=1366,height=768);
 layout(matrix(c(1,2), nrow=2, ncol=1), widths=c(5,5), heights=c(5,1))
 layout.show(2)
-plot(Prob_DL,meanRadius,col=pal.1(length(breaks)-1),pch=15,main=parameters[f],xlab="Prob DL",ylab="Mean Radius",ylim=c(0,700));
+plot(Prob_DL,meanRadius,col=pal.1(length(breaks)-1),pch=15,main=parameters[f],xlab="Prob DL",ylab="Mean Radius",ylim=c(0,700),cex=2,cex.lab=1.7,cex.axis=2,cex.main=1.8);
 par(mar=c(3,1,1,1))
 image.scale(gamma, col=pal.1(length(breaks)-1), breaks=breaks, horiz=TRUE)
 box()
@@ -56,7 +56,7 @@ dev.off();
 png(paste(files[f],"_varRadius.png",sep=""),width=1366,height=768);
 layout(matrix(c(1,2), nrow=2, ncol=1), widths=c(5,5), heights=c(5,1))
 layout.show(2)
-plot(Prob_DL,varRadius,col=pal.1(length(breaks)-1),pch=15,main=parameters[f],xlab="Prob DL",ylab="Var Radius",ylim=c(0,70000));
+plot(Prob_DL,varRadius,col=pal.1(length(breaks)-1),pch=15,main=parameters[f],xlab="Prob DL",ylab="Var Radius",ylim=c(0,70000),cex=2,cex.lab=1.7,cex.axis=2,cex.main=1.8);
 par(mar=c(3,1,1,1))
 image.scale(gamma, col=pal.1(length(breaks)-1), breaks=breaks, horiz=TRUE)
 box()

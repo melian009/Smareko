@@ -19,7 +19,7 @@ newspeciesP = 1;P = ones(S,J);mp = unifrnd(0.2,0.7,1);vp = unifrnd(0.1,0.5,1);
 %initial random geometric generator
 
 %r = unifrnd(10,700);%random landscape: r uniform 10 (all isolated sites),700 (all connected sites)
-A = 350;%amplitude, is the peak deviation: 350 to match simulations in random landscapes
+A = 100;%amplitude, is the peak deviation: 350 to match simulations in random landscapes
 f = 0.01;%ordinary frequency, number of cycles that occur each second of time
 sig = 0;%the phase
 r = A*sin(2*pi*f*A + sig) + A;%starting point with r approx. A
@@ -48,7 +48,7 @@ for k = 1:G;%population-metapopulation-metacommunity dynamics (not-tracking mult
      if rand > s;%landscape dynamic: rgn
         cdynamics = cdynamics + 1;
         %r = unifrnd(10,700);%random landscape: r uniform 10 (all isolated sites),700 (all connected sites)
-        A = 350;%amplitude, is the peak deviation: 350 to match simulations in random landscapes
+        A = 100;%amplitude, is the peak deviation: 350 to match simulations in random landscapes
         f = 0.01;%ordinary frequency, number of cycles that occur each second of time
         sig = 0;%the phase
         r = A*sin(2*pi*f*A + sig) + A;%starting point with r approx. A
